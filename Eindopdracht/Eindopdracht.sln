@@ -7,12 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eindopdracht", "Eindopdrach
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{AF5C7E92-45EA-47E7-9F76-512CD66F1A82}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Network", "Network\Network.shproj", "{ED7A1F43-3072-4AA5-93D6-7ECD65A4A364}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Network\Network.projitems*{ed7a1f43-3072-4aa5-93d6-7ecd65a4a364}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
