@@ -1,6 +1,6 @@
 ﻿namespace Client
 {
-    partial class Form1
+    partial class ClientGui
     {
         /// <summary>
         /// Required designer variable.
@@ -193,7 +193,7 @@
             this.NameCurrentSongLabel.Size = new System.Drawing.Size(0, 17);
             this.NameCurrentSongLabel.TabIndex = 3;
             // 
-            // Form1
+            // ClientGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -203,8 +203,8 @@
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "ClientGui";
+            this.Text = "ClientGui";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

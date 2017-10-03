@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
     class Session
     {
-        TcpClient client;
-        NetworkStream stream;
+        readonly NetworkStream _stream;
 
         public Session(TcpClient client)
         {
-            this.client = client;
-            stream = client.GetStream();
+            _stream = client.GetStream();
         }
 
         public void Send(string message)
@@ -26,7 +21,7 @@ namespace Client
             byte[] buffer = new Byte[prefixArray.Length + message.Length];
             prefixArray.CopyTo(buffer, 0);
             requestArray.CopyTo(buffer, prefixArray.Length);
-            stream.Write(buffer, 0, buffer.Length);
+            _stream.Write(buffer, 0, buffer.Length);
         }
 
         public void Read()
@@ -36,7 +31,6 @@ namespace Client
                 try
                 {
                     StringBuilder response = new StringBuilder();
-                    int numberOfBytesRead = 0;
                     int totalBytesreceived = 0;
                     int lengthMessage = -1;
                     byte[] receiveBuffer = new byte[1024];
@@ -44,7 +38,7 @@ namespace Client
 
                     do
                     {
-                        numberOfBytesRead = stream.Read(receiveBuffer, 0, receiveBuffer.Length);
+                        int numberOfBytesRead = _stream.Read(receiveBuffer, 0, receiveBuffer.Length);
                         totalBytesreceived += numberOfBytesRead;
                         string received = Encoding.ASCII.GetString(receiveBuffer, 0, numberOfBytesRead);
                         response.AppendFormat("{0}", received);
@@ -67,7 +61,7 @@ namespace Client
                         }
                     }
                     while (!messagereceived);
-                    stream.Flush();
+                    _stream.Flush();
                     string toReturn = response.ToString().Substring(4);
                     System.Diagnostics.Debug.WriteLine("Received: \r\n" + toReturn);
                 }
