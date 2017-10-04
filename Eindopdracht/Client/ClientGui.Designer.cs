@@ -125,18 +125,21 @@
             this.toevoegenToolStripMenuItem.Name = "toevoegenToolStripMenuItem";
             this.toevoegenToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
             this.toevoegenToolStripMenuItem.Text = "Toevoegen";
+            this.toevoegenToolStripMenuItem.Click += new System.EventHandler(this.toevoegenToolStripMenuItem_Click);
             // 
             // importerenToolStripMenuItem
             // 
             this.importerenToolStripMenuItem.Name = "importerenToolStripMenuItem";
             this.importerenToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
             this.importerenToolStripMenuItem.Text = "Importeren";
+            this.importerenToolStripMenuItem.Click += new System.EventHandler(this.importerenToolStripMenuItem_Click);
             // 
             // exporterenToolStripMenuItem
             // 
             this.exporterenToolStripMenuItem.Name = "exporterenToolStripMenuItem";
             this.exporterenToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
             this.exporterenToolStripMenuItem.Text = "Exporteren";
+            this.exporterenToolStripMenuItem.Click += new System.EventHandler(this.exporterenToolStripMenuItem_Click);
             // 
             // refreshSongListToolStripMenuItem
             // 

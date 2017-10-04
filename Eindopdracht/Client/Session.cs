@@ -6,13 +6,15 @@ namespace Client
 {
     class Session
     {
-        readonly NetworkStream _stream;
+        private readonly NetworkStream _stream;
 
         public Session(TcpClient client)
         {
             _stream = client.GetStream();
         }
 
+        //Send to client
+        #region
         public void Send(string message)
         {
             System.Diagnostics.Debug.WriteLine("Send: \r\n" + message);
@@ -23,7 +25,10 @@ namespace Client
             requestArray.CopyTo(buffer, prefixArray.Length);
             _stream.Write(buffer, 0, buffer.Length);
         }
+        #endregion
 
+        //Read from client
+        #region
         public void Read()
         {
             while (true)
@@ -71,5 +76,6 @@ namespace Client
                 }
             }
         }
+        #endregion
     }
 }
