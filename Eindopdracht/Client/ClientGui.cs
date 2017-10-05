@@ -57,6 +57,11 @@ namespace Client
         #region
         private void verbreekVerbindingToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            dynamic request = new
+            {
+                Action = "disconnect"
+            };
+            _session?.Send(JsonConvert.SerializeObject(request));
             _client?.Close();
             _readThread?.Abort();
             _session = null;
@@ -74,7 +79,8 @@ namespace Client
                     Action = "song/play"
                 };
                 _session.Send(JsonConvert.SerializeObject(request));
-            } else
+            }
+            else
             {
                 MessageBox.Show("Not connected to server");
             }
@@ -149,7 +155,8 @@ namespace Client
                     Action = "song/previous"
                 };
                 _session.Send(JsonConvert.SerializeObject(request));
-            } else
+            }
+            else
             {
                 MessageBox.Show("Not connected to server");
             }
@@ -177,7 +184,7 @@ namespace Client
 
         private void toevoegenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void importerenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -189,5 +196,24 @@ namespace Client
         {
 
         }
+
+        //Disconnect on form closing
+        #region
+        private void ClientGui_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_session != null)
+            {
+                dynamic request = new
+                {
+                    Action = "disconnect"
+                };
+                _session.Send(JsonConvert.SerializeObject(request));
+            }
+            else
+            {
+                MessageBox.Show("Not connected to server");
+            }
+        }
+        #endregion
     }
 }
