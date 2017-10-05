@@ -13,37 +13,39 @@ namespace Eindopdracht
 {
     class Program
     {
-        AudioController audiocontroller;
+        static AudioController audiocontroller;
+        static string myip = "145.49.30.206";
 
 
 
 
 		static void Main(string[] args)
         {
+            audiocontroller = new AudioController();
+            Network MyNetwork;
+            IPAddress lookback;
+            if(IPAddress.TryParse(myip,out lookback)) {
+                MyNetwork = new Network();
+				TcpListener listener = new TcpListener(lookback, 6969);
+                listener.Start();
+				while (true)
+				{
+					Console.WriteLine("Waiting for Connection");
+					try
+					{
+						TcpClient client = listener.AcceptTcpClient();
+                        MyNetwork.AddToList(client);
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e.Message);
 
-            
-            IPAddress lookback = new IPAddress.TryParse("127.0.0.1");
-            TcpListener listener = new TcpListener(lookback, 6969);
+					}
 
-
-
-
-            listener.Start();
-            while(true){
-                Console.WriteLine("Waiting for Connection");
-                try
-                {
-                    TcpClient client = listener.AcceptTcpClient();
-
-                    Thread t = new Thread();
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-
-                }
-
+				}  
             }
+            else{Console.WriteLine("CANT PARSE FOCK OFF"); }
+
 
         }
     }
