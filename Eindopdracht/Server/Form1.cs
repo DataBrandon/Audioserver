@@ -8,20 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Eindopdracht
+namespace Server
 {
-    public partial class MediaPlayerForm : Form
+    public partial class Form1 : Form
     {
-        public MediaPlayerForm()
+        public Form1()
         {
             InitializeComponent();
         }
 
-        public void Start()
-        {
-            Application.Run(this);
-        }
-
-        
+       
     }
 }
