@@ -20,6 +20,7 @@ namespace Eindopdracht
 
 		static void Main(string[] args)
         {
+
             
             IPAddress lookback = new IPAddress.TryParse("127.0.0.1");
             TcpListener listener = new TcpListener(lookback, 6969);
@@ -43,8 +44,6 @@ namespace Eindopdracht
                 }
 
             }
-
-
 
         }
     }
