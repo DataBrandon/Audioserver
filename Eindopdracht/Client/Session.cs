@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Client
 {
     class Session
     {
         private readonly NetworkStream _stream;
+        private readonly ClientGui gui;
 
-        public Session(TcpClient client)
+        public Session(TcpClient client, ClientGui gui)
         {
             _stream = client.GetStream();
+            this.gui = gui;
         }
 
         //Send to client
@@ -69,6 +73,7 @@ namespace Client
                     _stream.Flush();
                     string toReturn = response.ToString().Substring(4);
                     System.Diagnostics.Debug.WriteLine("Received: \r\n" + toReturn);
+                    ProcesAnswer(JsonConvert.DeserializeObject(toReturn));
                 }
                 catch (Exception e)
                 {
@@ -77,5 +82,18 @@ namespace Client
             }
         }
         #endregion
+
+        public void ProcesAnswer(dynamic jsonData)
+        {
+            if (jsonData.Action == "playlist/allsongs")
+            {
+                List<string> songs = new List<string>();
+                foreach (dynamic s in jsonData.data.songs)
+                {
+                    songs.Add((string)s);
+                }
+                gui.UpdateAllSongs(songs);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace Server
 {
@@ -28,10 +29,7 @@ namespace Server
             client.Close();
         }
 
-
-
 		//Send to client
-
 		#region
 		public void Send(string message)
 		{
@@ -46,8 +44,7 @@ namespace Server
 		#endregion
 
 
-// Read from client
-
+        // Read from client
 		#region
 		public void Read()
 		{
@@ -89,6 +86,7 @@ namespace Server
 					_stream.Flush();
 					string toReturn = response.ToString().Substring(4);
 					System.Diagnostics.Debug.WriteLine("Received: \r\n" + toReturn);
+                    ProcesAnswer(JsonConvert.DeserializeObject(toReturn));
 				}
 				catch (Exception e)
 				{
@@ -96,14 +94,60 @@ namespace Server
 				}
 			}
 		}
-		#endregion
+        #endregion
 
+        //Process the request from client
+        #region
 
+        public void ProcesAnswer(dynamic jsonData)
+        {
+            if (jsonData.Action == "song/play")
+            {
+                Program.RecievedPlay();
+            }
+            else if (jsonData.Action == "song/pause")
+            {
+                Program.RecievedPause();
+            }
+            else if (jsonData.Action == "song/stop")
+            {
+                Program.RecievedStop();
+            }
+            else if (jsonData.Action == "song/next")
+            {
+                Program.RecievedNext();
+            }
+            else if (jsonData.Action == "song/previous")
+            {
+                Program.RecievedPrevious();
+            }
+            else if (jsonData.Action == "playlist/allsongs")
+            {
+                dynamic answer = new
+                {
+                    Action = "playlist/allsongs",
+                    data = new
+                    {
+                        songs = MusicLibrary.songs.ToArray()
+                    }
+                };
+                Send(JsonConvert.SerializeObject(answer));
+            } else if (jsonData.Action == "play/selectedsong")
+            {
+                if (MusicLibrary.ContainsSong((string) jsonData.data.song))
+                {
+                    Program.PlaySelectedSong((string) jsonData.data.song);
+                    Program.RecievedPlay();
+                }
+            }
+            else if (jsonData.Action == "disconnect")
+            {
+                Close();
+                Program.CloseClient(this);
+            }
+        }
 
+        #endregion
 
-
-
-
-
-	}
-}
+        }
+    }

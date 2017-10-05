@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -31,10 +32,11 @@ namespace Client
                     if (IPAddress.TryParse(_ip, out IPAddress _))
                     {
                         _client = new TcpClient(_ip, _port);
-                        _session = new Session(_client);
+                        _session = new Session(_client, this);
                         _readThread = new Thread(_session.Read);
                         _readThread.Start();
                         System.Diagnostics.Debug.WriteLine("Verbonden");
+                        ServerStatus.Text = "Connected";
                     }
                     else
                     {
@@ -65,6 +67,7 @@ namespace Client
             _client?.Close();
             _readThread?.Abort();
             _session = null;
+            ServerStatus.Text = "Disconnected";
         }
         #endregion
 
@@ -215,5 +218,31 @@ namespace Client
             }
         }
         #endregion
+
+        public void UpdateAllSongs(List<string> songs)
+        {
+            AllSongList.BeginInvoke(new MethodInvoker(() =>
+            {
+                AllSongList.Items.Clear();
+                foreach (string song in songs)
+                {
+                    AllSongList.Items.Add(song);
+                }
+            }));
+        }
+
+        private void AllSongList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string selectedSong = AllSongList.SelectedItems[0].Text;
+            dynamic toSend = new
+            {
+                Action = "play/selectedsong",
+                data = new
+                {
+                    song = selectedSong
+                }
+            };
+            _session.Send(JsonConvert.SerializeObject(toSend));
+        }
     }
 }

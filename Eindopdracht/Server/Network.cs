@@ -15,17 +15,14 @@ namespace Server
 
         }
 
-
         public void AddToList(TcpClient client)
         {
             myclients.Add(new NetworkClient(client));
         }
 
-
-
-
-
-
-
+        public void RemoveFromList(NetworkClient client)
+        {
+            myclients.Remove(client);
+        }
     }
 }

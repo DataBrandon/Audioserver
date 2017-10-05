@@ -43,9 +43,11 @@
             this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verbindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verbreekVerbindingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.AllSongList = new System.Windows.Forms.ListView();
+            this.SongName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.NameCurrentSongLabel = new System.Windows.Forms.Label();
+            this.ServerStatus = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -171,13 +173,24 @@
             this.verbreekVerbindingToolStripMenuItem.Text = "Verbreek verbinding";
             this.verbreekVerbindingToolStripMenuItem.Click += new System.EventHandler(this.verbreekVerbindingToolStripMenuItem_Click);
             // 
-            // listView1
+            // AllSongList
             // 
-            this.listView1.Location = new System.Drawing.Point(223, 50);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(170, 208);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.AllSongList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.SongName});
+            this.AllSongList.FullRowSelect = true;
+            this.AllSongList.Location = new System.Drawing.Point(223, 50);
+            this.AllSongList.Name = "AllSongList";
+            this.AllSongList.Size = new System.Drawing.Size(201, 208);
+            this.AllSongList.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.AllSongList.TabIndex = 1;
+            this.AllSongList.UseCompatibleStateImageBehavior = false;
+            this.AllSongList.View = System.Windows.Forms.View.List;
+            this.AllSongList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.AllSongList_MouseDoubleClick);
+            // 
+            // SongName
+            // 
+            this.SongName.Text = "Song name";
+            this.SongName.Width = 200;
             // 
             // label1
             // 
@@ -196,14 +209,24 @@
             this.NameCurrentSongLabel.Size = new System.Drawing.Size(0, 17);
             this.NameCurrentSongLabel.TabIndex = 3;
             // 
+            // ServerStatus
+            // 
+            this.ServerStatus.AutoSize = true;
+            this.ServerStatus.Location = new System.Drawing.Point(324, 266);
+            this.ServerStatus.Name = "ServerStatus";
+            this.ServerStatus.Size = new System.Drawing.Size(100, 17);
+            this.ServerStatus.TabIndex = 4;
+            this.ServerStatus.Text = "Not connected";
+            // 
             // ClientGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 292);
+            this.Controls.Add(this.ServerStatus);
             this.Controls.Add(this.NameCurrentSongLabel);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.AllSongList);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ClientGui";
@@ -233,9 +256,11 @@
         private System.Windows.Forms.ToolStripMenuItem verbindToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verbreekVerbindingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshSongListToolStripMenuItem;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView AllSongList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label NameCurrentSongLabel;
+        private System.Windows.Forms.ColumnHeader SongName;
+        private System.Windows.Forms.Label ServerStatus;
     }
 }
 
