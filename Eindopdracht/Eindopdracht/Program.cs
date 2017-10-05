@@ -14,10 +14,7 @@ namespace Eindopdracht
     class Program
     {
         static AudioController audiocontroller;
-        static string myip = "145.49.30.206";
-
-
-
+        static string myip = "127.0.0.1";
 
 		static void Main(string[] args)
         {
@@ -28,9 +25,9 @@ namespace Eindopdracht
                 MyNetwork = new Network();
 				TcpListener listener = new TcpListener(lookback, 6969);
                 listener.Start();
-				while (true)
+                Console.WriteLine("Waiting for Connection");
+                while (true)
 				{
-					Console.WriteLine("Waiting for Connection");
 					try
 					{
 						TcpClient client = listener.AcceptTcpClient();

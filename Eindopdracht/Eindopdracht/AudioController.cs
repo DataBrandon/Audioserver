@@ -1,18 +1,25 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
+using System.Windows.Forms;
+
 namespace Eindopdracht
 {
     public class AudioController
     {
-        System.Media.SoundPlayer myplayer;
+        private MediaPlayerForm mediaPlayer;
+        private Thread playerThread;
         
         public AudioController()
         {
-            String mypath = Path.Combine(Directory.GetCurrentDirectory(),"maya greet.wav");
-            myplayer = new System.Media.SoundPlayer(mypath);
+            mediaPlayer = new MediaPlayerForm();
+            playerThread = new Thread(mediaPlayer.Start);
+            playerThread.Start();
+        }
 
-            myplayer.Play();
-            Console.WriteLine("playing");
+        public void Close()
+        {
+            playerThread.Abort();
         }
     }
 }
