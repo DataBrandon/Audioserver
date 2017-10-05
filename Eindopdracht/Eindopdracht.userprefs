@@ -1,8 +1,12 @@
 ﻿<Properties StartupConfiguration="{7459B3F6-F149-4EA5-9AD2-35D46698405A}|Default">
   <MonoDevelop.Ide.ItemProperties.Eindopdracht PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Eindopdracht/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Eindopdracht/NetworkClient.cs">
     <Files>
-      <File FileName="Eindopdracht/Program.cs" Line="32" Column="41" />
+      <File FileName="Eindopdracht/Program.cs" Line="49" Column="10" />
+      <File FileName="Eindopdracht/Network.cs" Line="6" Column="9" />
+      <File FileName="Eindopdracht/AudioController.cs" Line="8" Column="13" />
+      <File FileName="Eindopdracht/App.config" Line="1" Column="1" />
+      <File FileName="Eindopdracht/NetworkClient.cs" Line="7" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
