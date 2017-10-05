@@ -31,6 +31,7 @@ namespace Eindopdracht
 					try
 					{
 						TcpClient client = listener.AcceptTcpClient();
+					    Console.WriteLine("Connected to " + client.Client.AddressFamily.ToString());
                         MyNetwork.AddToList(client);
 					}
 					catch (Exception e)

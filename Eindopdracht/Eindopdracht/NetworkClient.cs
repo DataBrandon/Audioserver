@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace Eindopdracht
 {
@@ -10,7 +11,7 @@ namespace Eindopdracht
         TcpClient client;
         private readonly NetworkStream _stream;
         Thread readThread;
-
+        private bool shouldRead = true;
 
 
         public NetworkClient(TcpClient client)
@@ -23,6 +24,7 @@ namespace Eindopdracht
 
         public void Close()
         {
+            Console.WriteLine("Disconnected " + client.Client.AddressFamily.ToString());
             readThread.Abort();
             _stream.Close();
             client.Close();
@@ -46,12 +48,12 @@ namespace Eindopdracht
 		#endregion
 
 
-// Read from client
+        // Read from client
 
 		#region
 		public void Read()
 		{
-			while (true)
+			while (shouldRead)
 			{
 				try
 				{
@@ -89,17 +91,45 @@ namespace Eindopdracht
 					_stream.Flush();
 					string toReturn = response.ToString().Substring(4);
 					System.Diagnostics.Debug.WriteLine("Received: \r\n" + toReturn);
+				    ProcesAnswer(JsonConvert.DeserializeObject(toReturn));
 				}
 				catch (Exception e)
 				{
 					System.Diagnostics.Debug.WriteLine(e.Message);
 				}
 			}
+            Close();
 		}
-		#endregion
+        #endregion
 
-
-
+        //Process the request from client
+        #region
+        public void ProcesAnswer(dynamic jsonData)
+        {
+            if (jsonData.Action == "song/play")
+            {
+                Console.WriteLine("Recieved song/play");
+            } else if (jsonData.Action == "song/pause")
+            {
+                Console.WriteLine("Recieved song/pause");
+            } else if (jsonData.Action == "song/stop")
+            {
+                Console.WriteLine("Recieved song/stop");
+            } else if (jsonData.Action == "song/next")
+            {
+                Console.WriteLine("Recieved song/next");
+            } else if (jsonData.Action == "song/previous")
+            {
+                Console.WriteLine("Recieved song/previous");
+            } else if (jsonData.Action == "playlist/allsongs")
+            {
+                Console.WriteLine("Recieved song/allsongs");
+            } else if (jsonData.Action == "disconnect")
+            {
+                Console.WriteLine("Disconnected client " + client.Client.AddressFamily.ToString());
+            }
+            #endregion
+        }
 
 
 

@@ -20,12 +20,5 @@ namespace Eindopdracht
         {
             myclients.Add(new NetworkClient(client));
         }
-
-
-
-
-
-
-
     }
 }
