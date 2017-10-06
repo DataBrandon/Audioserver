@@ -12,7 +12,7 @@ namespace Server
         public static string LibraryFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         public static List<string> songs = new List<string>();
         public static List<string> playList = new List<string>();
-        private static int currentIndex = 0;
+        public static int currentIndex { get; set; }
 
         public static void IndexSongs()
         {
@@ -46,11 +46,10 @@ namespace Server
 
         public static string GetNextSongFromPlaylist()
         {
-            System.Diagnostics.Debug.WriteLine("Next: " + currentIndex);
             if (playList.Count > currentIndex)
             {
-                string song = playList[currentIndex];
                 currentIndex++;
+                string song = playList[currentIndex];
                 return song;
             }
             return "";
@@ -58,7 +57,6 @@ namespace Server
 
         public static string GetPreviousSongFromPlaylist()
         {
-            System.Diagnostics.Debug.WriteLine("Prev: " + currentIndex);
             if (playList.Any())
             {
                 if (currentIndex > 0)
@@ -68,6 +66,15 @@ namespace Server
                 return playList[currentIndex];
             }
             return "";
+        }
+
+        public static void PrintPlaylist()
+        {
+            foreach (string song in playList)
+            {
+                System.Diagnostics.Debug.Write(song);
+            }
+            System.Diagnostics.Debug.WriteLine("");
         }
     }
 }
