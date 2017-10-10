@@ -76,7 +76,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MediaPlayerForm";
-            this.Text = "Form1";
+            this.Text = "MediaPlayer server";
             ((System.ComponentModel.ISupportInitialize)(this.WMP)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
