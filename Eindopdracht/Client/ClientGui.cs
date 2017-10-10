@@ -187,17 +187,18 @@ namespace Client
 
         private void toevoegenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void importerenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //todo songs naar playlist listview
+            UpdateAllSongs(Filer.ImportPlaylist());
         }
 
         private void exporterenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         //Disconnect on form closing

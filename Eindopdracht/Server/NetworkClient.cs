@@ -121,18 +121,31 @@ namespace Server
             {
                 Program.RecievedPrevious();
             }
-            else if (jsonData.Action == "playlist/allsongs")
+            else if (jsonData.Action == "allsongs")
             {
                 dynamic answer = new
                 {
-                    Action = "playlist/allsongs",
+                    Action = "allsongs",
                     data = new
                     {
                         songs = MusicLibrary.songs.ToArray()
                     }
                 };
                 Send(JsonConvert.SerializeObject(answer));
-            } else if (jsonData.Action == "play/selectedsong")
+            }
+            else if (jsonData.Action == "playlist/current/all")
+            {
+                dynamic answer = new
+                {
+                    Action = "playlist/current/all",
+                    data = new
+                    {
+                        songs = MusicLibrary.playList.ToArray()
+                    }
+                };
+                Send(JsonConvert.SerializeObject(answer));
+            }
+            else if (jsonData.Action == "play/selectedsong")
             {
                 if (MusicLibrary.ContainsSong((string) jsonData.data.song))
                 {

@@ -85,13 +85,23 @@ namespace Client
 
         public void ProcesAnswer(dynamic jsonData)
         {
-            if (jsonData.Action == "playlist/allsongs")
+            if (jsonData.Action == "allsongs")
             {
                 List<string> songs = new List<string>();
                 foreach (dynamic s in jsonData.data.songs)
                 {
                     songs.Add((string)s);
                 }
+                gui.UpdateAllSongs(songs);
+            }
+            else if (jsonData.Action == "playlist/current/all")
+            {
+                List<string> songs = new List<string>();
+                foreach (dynamic s in jsonData.data.songs)
+                {
+                    songs.Add((string)s);
+                }
+                //TO DO Nog wijzigen naar current playlist listview
                 gui.UpdateAllSongs(songs);
             }
         }
