@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 
 namespace Client
 {
     class Session
     {
+        private readonly string _ip = "127.0.0.1";
+        private readonly int _port = 6970;
+        private Thread uploadThread;
+        private MP3FileTransfer transfer;
+        public string FileToTransfer { get; set; }
         private readonly NetworkStream _stream;
         private readonly ClientGui gui;
 
@@ -103,6 +110,32 @@ namespace Client
                 }
                 //TO DO Nog wijzigen naar current playlist listview
                 gui.UpdateAllSongs(songs);
+            }
+            else if (jsonData.Action == "song/upload")
+            {
+                if (jsonData.data.Action == "ready")
+                {
+                    if (FileToTransfer != null)
+                    {
+                        transfer = new MP3FileTransfer(_ip, _port, FileToTransfer);
+                        FileToTransfer = null;
+                        uploadThread = new Thread(transfer.SendMP3);
+                        uploadThread.Start();
+                    }
+                }
+                else if (jsonData.data.Action == "done")
+                {
+                    transfer?.Close();
+                    MessageBox.Show("Song succesfully added");
+                } else if (jsonData.data.Action == "error")
+                {
+                    transfer?.Close();
+                    MessageBox.Show("Upload failed: " + jsonData.data.message);
+                }
+                else
+                {
+                    MessageBox.Show("Server not ready to upload");
+                }
             }
         }
     }

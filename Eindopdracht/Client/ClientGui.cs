@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -11,7 +12,7 @@ namespace Client
     public partial class ClientGui : Form
     {
         private readonly string _ip = "127.0.0.1";
-        readonly int _port = 6969;
+        private readonly int _port = 6969;
         private TcpClient _client;
         private Session _session;
         private Thread _readThread;
@@ -174,7 +175,7 @@ namespace Client
             {
                 dynamic request = new
                 {
-                    Action = "playlist/allsongs"
+                    Action = "allsongs"
                 };
                 _session.Send(JsonConvert.SerializeObject(request));
             }
@@ -187,7 +188,7 @@ namespace Client
 
         private void toevoegenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void importerenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -198,7 +199,7 @@ namespace Client
 
         private void exporterenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         //Disconnect on form closing
@@ -240,6 +241,36 @@ namespace Client
                 }
             };
             _session.Send(JsonConvert.SerializeObject(toSend));
+        }
+
+        private void addASongToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_session != null)
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "MP3 bestanden(*.mp3)|*.mp3";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    string[] splittedPath = filePath.Split('\\');
+                    string songname = splittedPath[splittedPath.Length - 1];
+                    dynamic toSend = new
+                    {
+                        Action = "song/upload",
+                        data = new
+                        {
+                            Action = "start",
+                            songname = songname
+                        }
+                    };
+                    _session.FileToTransfer = filePath;
+                    _session.Send(JsonConvert.SerializeObject(toSend));
+                }
+            }
+            else
+            {
+                MessageBox.Show("First you need to connect to the server");
+            }
         }
     }
 }

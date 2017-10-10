@@ -55,6 +55,7 @@
     <Compile Include="MediaPlayerForm.Designer.cs">
       <DependentUpon>MediaPlayerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MP3FileTransfer.cs" />
     <Compile Include="MusicLibrary.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="NetworkClient.cs" />

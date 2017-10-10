@@ -11,6 +11,8 @@ namespace Server
         TcpClient client;
         private readonly NetworkStream _stream;
         Thread readThread;
+        private Thread recieveUploadThread;
+        private MP3FileTransfer transfer;
 
 
 
@@ -153,14 +155,57 @@ namespace Server
                     Program.RecievedPlay();
                 }
             }
+            else if (jsonData.Action == "song/upload")
+            {
+                if (jsonData.data.Action == "start")
+                {
+                    transfer = new MP3FileTransfer((string) jsonData.data.songname, this);
+                    recieveUploadThread = new Thread(transfer.ReceiveMP3);
+                    recieveUploadThread.Start();
+                    dynamic toSend = new
+                    {
+                        Action = "song/upload",
+                        data = new
+                        {
+                            Action = "ready"
+                        }
+                    };
+                    Send(JsonConvert.SerializeObject(toSend));
+                }
+            }
             else if (jsonData.Action == "disconnect")
             {
                 Close();
                 Program.CloseClient(this);
             }
         }
-
         #endregion
 
+        public void NotifyUploadDone()
+        {
+            dynamic toSend = new
+            {
+                Action = "song/upload",
+                data = new
+                {
+                    Action = "done"
+                }
+            };
+            Send(JsonConvert.SerializeObject(toSend));
+        }
+
+        public void NotifyUploadError(string message)
+        {
+            dynamic toSend = new
+            {
+                Action = "song/upload",
+                data = new
+                {
+                    Action = "error",
+                    message = message
+                }
+            };
+            Send(JsonConvert.SerializeObject(toSend));
+        }
         }
     }

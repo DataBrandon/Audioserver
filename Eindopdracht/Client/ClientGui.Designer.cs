@@ -48,6 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NameCurrentSongLabel = new System.Windows.Forms.Label();
             this.ServerStatus = new System.Windows.Forms.Label();
+            this.addASongToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,35 +80,35 @@
             // playToolStripMenuItem
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.playToolStripMenuItem.Text = "Play";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // nextToolStripMenuItem
             // 
             this.nextToolStripMenuItem.Name = "nextToolStripMenuItem";
-            this.nextToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.nextToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.nextToolStripMenuItem.Text = "Next";
             this.nextToolStripMenuItem.Click += new System.EventHandler(this.nextToolStripMenuItem_Click);
             // 
             // previousToolStripMenuItem
             // 
             this.previousToolStripMenuItem.Name = "previousToolStripMenuItem";
-            this.previousToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.previousToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.previousToolStripMenuItem.Text = "Previous";
             this.previousToolStripMenuItem.Click += new System.EventHandler(this.previousToolStripMenuItem_Click);
             // 
@@ -154,7 +155,8 @@
             // 
             this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.verbindToolStripMenuItem,
-            this.verbreekVerbindingToolStripMenuItem});
+            this.verbreekVerbindingToolStripMenuItem,
+            this.addASongToolStripMenuItem});
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
             this.serverToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
             this.serverToolStripMenuItem.Text = "Server";
@@ -218,6 +220,13 @@
             this.ServerStatus.TabIndex = 4;
             this.ServerStatus.Text = "Not connected";
             // 
+            // addASongToolStripMenuItem
+            // 
+            this.addASongToolStripMenuItem.Name = "addASongToolStripMenuItem";
+            this.addASongToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
+            this.addASongToolStripMenuItem.Text = "Add a song";
+            this.addASongToolStripMenuItem.Click += new System.EventHandler(this.addASongToolStripMenuItem_Click);
+            // 
             // ClientGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -261,6 +270,7 @@
         private System.Windows.Forms.Label NameCurrentSongLabel;
         private System.Windows.Forms.ColumnHeader SongName;
         private System.Windows.Forms.Label ServerStatus;
+        private System.Windows.Forms.ToolStripMenuItem addASongToolStripMenuItem;
     }
 }
 
