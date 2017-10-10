@@ -212,10 +212,6 @@ namespace Client
                 };
                 _session.Send(JsonConvert.SerializeObject(request));
             }
-            else
-            {
-                MessageBox.Show("Not connected to server");
-            }
         }
         #endregion
 
