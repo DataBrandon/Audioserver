@@ -9,13 +9,13 @@ using Microsoft.SqlServer.Server;
 
 namespace Client
 {
-    class MP3FileTransfer
+    class FileTransfer
     {
         private string fileToTransfer;
         private TcpClient client;
         private NetworkStream stream;
 
-        public MP3FileTransfer(string ip, int port, string fileToTransfer)
+        public FileTransfer(string ip, int port, string fileToTransfer)
         {
             this.fileToTransfer = fileToTransfer;
             client = new TcpClient(ip, port);
@@ -30,6 +30,7 @@ namespace Client
             prefixArray.CopyTo(buffer, 0);
             file.CopyTo(buffer, prefixArray.Length);
             stream.Write(buffer, 0, buffer.Length);
+            System.Diagnostics.Debug.WriteLine("Uploaden: " + file.Length);
         }
 
         public void Close()

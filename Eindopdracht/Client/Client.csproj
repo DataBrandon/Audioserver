@@ -56,7 +56,7 @@
       <DependentUpon>ClientGui.cs</DependentUpon>
     </Compile>
     <Compile Include="Filer.cs" />
-    <Compile Include="MP3FileTransfer.cs" />
+    <Compile Include="FileTransfer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />

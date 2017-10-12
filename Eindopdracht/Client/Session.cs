@@ -13,7 +13,7 @@ namespace Client
         private readonly string _ip = "127.0.0.1";
         private readonly int _port = 6970;
         private Thread uploadThread;
-        private MP3FileTransfer transfer;
+        private FileTransfer transfer;
         public string FileToTransfer { get; set; }
         private readonly NetworkStream _stream;
         private readonly ClientGui gui;
@@ -90,6 +90,8 @@ namespace Client
         }
         #endregion
 
+        //Process answer from server
+        #region
         public void ProcesAnswer(dynamic jsonData)
         {
             if (jsonData.Action == "allsongs")
@@ -111,13 +113,22 @@ namespace Client
                 //TO DO Nog wijzigen naar current playlist listview
                 gui.UpdateCurrentPlaylist(songs);
             }
+            else if (jsonData.Action == "playlist/getcurrent")
+            {
+                List<string> playlistsongs = new List<string>();
+                foreach (dynamic song in jsonData.data.playlist)
+                {
+                    playlistsongs.Add((string) song);
+                }
+                gui.UpdateStatus((string) jsonData.data.currentsong, playlistsongs);
+            }
             else if (jsonData.Action == "song/upload")
             {
                 if (jsonData.data.Action == "ready")
                 {
                     if (FileToTransfer != null)
                     {
-                        transfer = new MP3FileTransfer(_ip, _port, FileToTransfer);
+                        transfer = new FileTransfer(_ip, _port, FileToTransfer);
                         FileToTransfer = null;
                         uploadThread = new Thread(transfer.SendMP3);
                         uploadThread.Start();
@@ -126,7 +137,7 @@ namespace Client
                 else if (jsonData.data.Action == "done")
                 {
                     transfer?.Close();
-                    MessageBox.Show("Song succesfully added");
+                    MessageBox.Show("Media file succesfully added");
                 } else if (jsonData.data.Action == "error")
                 {
                     transfer?.Close();
@@ -138,5 +149,6 @@ namespace Client
                 }
             }
         }
+        #endregion
     }
 }

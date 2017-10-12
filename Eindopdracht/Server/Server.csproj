@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Server</RootNamespace>
     <AssemblyName>Server</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,7 +56,7 @@
     <Compile Include="MediaPlayerForm.Designer.cs">
       <DependentUpon>MediaPlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MP3FileTransfer.cs" />
+    <Compile Include="FileTransfer.cs" />
     <Compile Include="MusicLibrary.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="NetworkClient.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -73,7 +73,7 @@ namespace Server
             MusicLibrary.AddSongToPlayListFront(song);
             if (!mediaPlayer.IsPlaying())
             {
-                int songIndex = MusicLibrary.playList.Count - 1;
+                int songIndex = 0;
                 MusicLibrary.currentIndex = songIndex;
                 mediaPlayer?.PlaySelectedsong(song);
             }

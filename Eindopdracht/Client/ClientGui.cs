@@ -17,6 +17,7 @@ namespace Client
         private Session _session;
         private Thread _readThread;
         private List<string> editList;
+        private Thread currentPlaylistRead;
 
         public ClientGui()
         {
@@ -40,6 +41,16 @@ namespace Client
                         _readThread.Start();
                         System.Diagnostics.Debug.WriteLine("Verbonden");
                         ServerStatus.Text = "Connected";
+                        currentPlaylistRead = new Thread(() =>
+                        {
+                            while (true)
+                            {
+                                GetCurrentPlaylistFromServer();
+                                Thread.Sleep(1000);
+                            }
+                        });
+                        currentPlaylistRead.Start();
+                        RefreshSongList();
                     }
                     else
                     {
@@ -62,6 +73,13 @@ namespace Client
         #region
         private void verbreekVerbindingToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                currentPlaylistRead?.Abort();
+            }
+            catch
+            {
+            }
             dynamic request = new
             {
                 Action = "disconnect"
@@ -173,30 +191,16 @@ namespace Client
         #region
         private void refreshSongListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_session != null)
-            {
-                dynamic request = new
-                {
-                    Action = "allsongs"
-                };
-                _session.Send(JsonConvert.SerializeObject(request));
-            }
-            else
-            {
-                MessageBox.Show("Not connected to server");
-            }
+            RefreshSongList();
         }
-        #endregion
 
-        //Refresh song list
-        #region
-        private void GetCurrentPlaylist(object sender, EventArgs e)
+        public void RefreshSongList()
         {
             if (_session != null)
             {
                 dynamic request = new
                 {
-                    Action = "playlist/current/all"
+                    Action = "allsongs"
                 };
                 _session.Send(JsonConvert.SerializeObject(request));
             }
@@ -217,8 +221,11 @@ namespace Client
         {
             //todo songs naar playlist listview
             editList = Filer.ImportPlaylist();
-            UpdateCurrentPlaylist(editList);
-            CurrentPlayListView.Enabled = true;
+            if (editList != null)
+            {
+                UpdateCurrentPlaylist(editList);
+                CurrentPlayListView.Enabled = true;
+            }
         }
 
         private void exporterenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -271,6 +278,9 @@ namespace Client
         private void AllSongList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string selectedSong = AllSongList.SelectedItems[0].Text;
+
+            if (e.Button == MouseButtons.Left) { 
+            
             dynamic toSend = new
             {
                 Action = "play/selectedsong",
@@ -280,8 +290,13 @@ namespace Client
                 }
             };
             _session.Send(JsonConvert.SerializeObject(toSend));
-            editList.Add(selectedSong);
-            UpdateCurrentPlaylist(editList);
+            
+        }
+            else if (e.Button == MouseButtons.Right && CurrentPlayListView.Enabled)
+            {
+                editList.Add(selectedSong);
+                UpdateCurrentPlaylist(editList);
+            }
         }
 
         private void CurrentPlayListView_DoubleClick(object sender, MouseEventArgs e)
@@ -293,20 +308,7 @@ namespace Client
                 editList.Remove(selectedSong);
                 UpdateCurrentPlaylist(editList);
             }
-            else
-            {
-                string selectedSong = CurrentPlayListView.SelectedItems[0].Text;
-                dynamic toSend = new
-                {
-                    Action = "play/selectedsong",
-                    data = new
-                    {
-                        song = selectedSong
-                    }
-                };
-                _session.Send(JsonConvert.SerializeObject(toSend));
-
-            }
+            
 
         }
 
@@ -315,7 +317,8 @@ namespace Client
             if (_session != null)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "MP3 bestanden(*.mp3)|*.mp3";
+                //openFileDialog.Filter = "MP3 bestanden(*.mp3)|*.mp3 | MP4 bestanden(*.mp4)|*.mp4";
+                openFileDialog.Filter = "MP3/MP4 bestanden|*.mp3;*.mp4";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
@@ -338,6 +341,57 @@ namespace Client
             {
                 MessageBox.Show("First you need to connect to the server");
             }
+        }
+
+        private void sendListToServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CurrentPlayListView.Items.Count > 0)
+            {
+                List<string> songs = new List<string>();
+                foreach (ListViewItem song in CurrentPlayListView.Items)
+                {
+                    songs.Add(song.Text);
+                }
+                dynamic toSend = new
+                {
+                    Action = "playlist/override",
+                    data = new
+                    {
+                        songs = songs.ToArray()
+                    }
+                };
+                _session.Send(JsonConvert.SerializeObject(toSend));
+            }
+            else
+            {
+                MessageBox.Show("Add a song first before sending the playlist to the server.");
+            }
+        }
+
+        public void GetCurrentPlaylistFromServer()
+        {
+            dynamic request = new
+            {
+                Action = "playlist/getcurrent",
+                data = new
+                {
+                    
+                }
+            };
+            _session.Send(JsonConvert.SerializeObject(request));
+        }
+
+        public void UpdateStatus(string currentsong, List<string> currentplaylist)
+        {
+            this.BeginInvoke(new MethodInvoker(() =>
+            {
+                label5.Text = currentsong;
+                playlistserver.Items.Clear();
+                foreach (string song in currentplaylist)
+                {
+                    playlistserver.Items.Add(song);
+                }
+            }));
         }
     }
 }

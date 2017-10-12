@@ -48,7 +48,7 @@ namespace Server
 
         public void Next()
         {
-            string song = MusicLibrary.GetNextSongFromPlaylist();
+            MusicLibrary.GetNextSongFromPlaylist(out string song);
             if (song != "")
             {
                 PlaySelectedsong(song);
@@ -58,7 +58,7 @@ namespace Server
 
         public void Previous()
         {
-            string song = MusicLibrary.GetPreviousSongFromPlaylist();
+            MusicLibrary.GetPreviousSongFromPlaylist(out string song);
             if (song != "")
             {
                 PlaySelectedsong(song);
@@ -88,7 +88,7 @@ namespace Server
         {
             if (e.newState == 8)
             {
-                string song = MusicLibrary.GetNextSongFromPlaylist();
+                MusicLibrary.GetNextSongFromPlaylist(out string song);
                 if (song != "")
                 {
                     PlaySelectedsong(song);
@@ -110,7 +110,8 @@ namespace Server
         private void loadPlayListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MusicLibrary.LoadPlayListFromDisk();
-            PlaySelectedsong(MusicLibrary.GetNextSongFromPlaylist());
+            MusicLibrary.GetNextSongFromPlaylist(out string song);
+            PlaySelectedsong(song);
         }
     }
 }

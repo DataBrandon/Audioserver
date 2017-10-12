@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace Server
         private readonly NetworkStream _stream;
         Thread readThread;
         private Thread recieveUploadThread;
-        private MP3FileTransfer transfer;
+        private FileTransfer transfer;
 
 
 
@@ -125,6 +126,7 @@ namespace Server
             }
             else if (jsonData.Action == "allsongs")
             {
+                MusicLibrary.IndexSongs();
                 dynamic answer = new
                 {
                     Action = "allsongs",
@@ -159,8 +161,8 @@ namespace Server
             {
                 if (jsonData.data.Action == "start")
                 {
-                    transfer = new MP3FileTransfer((string) jsonData.data.songname, this);
-                    recieveUploadThread = new Thread(transfer.ReceiveMP3);
+                    transfer = new FileTransfer((string) jsonData.data.songname, this);
+                    recieveUploadThread = new Thread(transfer.ReceiveFile);
                     recieveUploadThread.Start();
                     dynamic toSend = new
                     {
@@ -172,6 +174,39 @@ namespace Server
                     };
                     Send(JsonConvert.SerializeObject(toSend));
                 }
+            }
+            else if (jsonData.Action == "playlist/override")
+            {
+                string firstSong = "";
+                List<string> currentPlaylist = new List<string>();
+                foreach (dynamic song in jsonData.data.songs)
+                {
+                    if (firstSong == "")
+                    {
+                        firstSong = (string)song;
+                    }
+                    else
+                    {
+                        currentPlaylist.Add((string) song);
+                    }
+                }
+                MusicLibrary.LoadNewPlaylist(currentPlaylist);
+                Program.PlaySelectedSong(firstSong);
+            }
+             else if (jsonData.Action == "playlist/getcurrent")
+            {
+                (string currentsong, List<string> playlist) = MusicLibrary.GetCurrentState();
+                dynamic answer = new
+                {
+                    Action = "playlist/getcurrent",
+                    
+                    data = new
+                    {
+                        currentsong = currentsong,
+                        playlist =  playlist
+                    }
+                };
+                Send(JsonConvert.SerializeObject(answer));
             }
             else if (jsonData.Action == "disconnect")
             {

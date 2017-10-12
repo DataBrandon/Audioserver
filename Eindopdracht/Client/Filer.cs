@@ -34,8 +34,7 @@ namespace Client
         {
 
             OpenFileDialog openfile = new OpenFileDialog();
-          
-
+            openfile.Filter = "Playlist bestand|*.plist";
             if (openfile.ShowDialog() == DialogResult.OK)
             {
                 string filename = openfile.FileName;

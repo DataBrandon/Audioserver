@@ -21,7 +21,7 @@ namespace Server
             songs.Clear();
             foreach (string s in Directory.GetFiles(LibraryFolder))
             {
-                if (s.Contains(".mp3"))
+                if (s.Contains(".mp3") || s.Contains(".mp4"))
                 {
                     string[] array = s.Split('\\');
                     string fileName = array[array.Length - 1];
@@ -43,21 +43,27 @@ namespace Server
 
         public static void AddSongToPlayListFront(string song)
         {
-            playList.Add(song);
+            List<string> newPlaylist = new List<string>();
+            newPlaylist.Add(song);
+            newPlaylist.AddRange(playList);
+            playList = newPlaylist;
+            currentIndex++;
         }
 
-        public static string GetNextSongFromPlaylist()
+        public static void GetNextSongFromPlaylist(out string song)
         {
-            if (playList.Count > currentIndex)
+            if (playList.Count > currentIndex + 1)
             {
                 currentIndex++;
-                string song = playList[currentIndex];
-                return song;
+                song = playList[currentIndex];
             }
-            return "";
+            else
+            {
+                song = "";
+            }
         }
 
-        public static string GetPreviousSongFromPlaylist()
+        public static void GetPreviousSongFromPlaylist(out string song)
         {
             if (playList.Any())
             {
@@ -65,9 +71,12 @@ namespace Server
                 {
                     currentIndex--;
                 }
-                return playList[currentIndex];
+                song = playList[currentIndex];
             }
-            return "";
+            else
+            {
+                song = "";
+            }
         }
 
         public static void PrintPlaylist()
@@ -93,6 +102,22 @@ namespace Server
         public static void LoadPlayListFromDisk()
         {
              playList = Filer.LoadPlayListFromDisk();
+        }
+
+        public static void LoadNewPlaylist(List<string> songs)
+        {
+            playList = songs;
+            currentIndex = 0;
+        }
+
+        public static (string, List<string>) GetCurrentState()
+        {
+            string currentsong = "";
+            if (MusicLibrary.playList.Count > MusicLibrary.currentIndex)
+            {
+                currentsong = MusicLibrary.playList[MusicLibrary.currentIndex];
+            }
+            return (currentsong, playList);
         }
     }
 }
