@@ -52,6 +52,7 @@
             this.CurrentPlayListView = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.addASongToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -166,7 +167,8 @@
             // 
             this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.verbindToolStripMenuItem,
-            this.verbreekVerbindingToolStripMenuItem});
+            this.verbreekVerbindingToolStripMenuItem,
+            this.addASongToolStripMenuItem});
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
             this.serverToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.serverToolStripMenuItem.Text = "Server";
@@ -263,6 +265,12 @@
             this.label3.Size = new System.Drawing.Size(94, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Te maken PlayList";
+            // addASongToolStripMenuItem
+            // 
+            this.addASongToolStripMenuItem.Name = "addASongToolStripMenuItem";
+            this.addASongToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
+            this.addASongToolStripMenuItem.Text = "Add a song";
+            this.addASongToolStripMenuItem.Click += new System.EventHandler(this.addASongToolStripMenuItem_Click);
             // 
             // ClientGui
             // 
@@ -316,6 +324,7 @@
         private System.Windows.Forms.ToolStripMenuItem sendListToServerToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripMenuItem addASongToolStripMenuItem;
     }
 }
 
