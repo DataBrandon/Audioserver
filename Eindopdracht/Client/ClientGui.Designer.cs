@@ -40,6 +40,7 @@
             this.importerenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exporterenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshSongListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendListToServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verbindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verbreekVerbindingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,6 +49,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.NameCurrentSongLabel = new System.Windows.Forms.Label();
             this.ServerStatus = new System.Windows.Forms.Label();
+            this.CurrentPlayListView = new System.Windows.Forms.ListView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +64,8 @@
             this.serverToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(436, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(447, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -73,41 +78,41 @@
             this.nextToolStripMenuItem,
             this.previousToolStripMenuItem});
             this.PlayMenuItem.Name = "PlayMenuItem";
-            this.PlayMenuItem.Size = new System.Drawing.Size(63, 24);
+            this.PlayMenuItem.Size = new System.Drawing.Size(52, 20);
             this.PlayMenuItem.Text = "Media";
             // 
             // playToolStripMenuItem
             // 
             this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.playToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.playToolStripMenuItem.Text = "Play";
             this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // nextToolStripMenuItem
             // 
             this.nextToolStripMenuItem.Name = "nextToolStripMenuItem";
-            this.nextToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.nextToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.nextToolStripMenuItem.Text = "Next";
             this.nextToolStripMenuItem.Click += new System.EventHandler(this.nextToolStripMenuItem_Click);
             // 
             // previousToolStripMenuItem
             // 
             this.previousToolStripMenuItem.Name = "previousToolStripMenuItem";
-            this.previousToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+            this.previousToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.previousToolStripMenuItem.Text = "Previous";
             this.previousToolStripMenuItem.Click += new System.EventHandler(this.previousToolStripMenuItem_Click);
             // 
@@ -117,38 +122,45 @@
             this.toevoegenToolStripMenuItem,
             this.importerenToolStripMenuItem,
             this.exporterenToolStripMenuItem,
-            this.refreshSongListToolStripMenuItem});
+            this.refreshSongListToolStripMenuItem,
+            this.sendListToServerToolStripMenuItem});
             this.playlistToolStripMenuItem.Name = "playlistToolStripMenuItem";
-            this.playlistToolStripMenuItem.Size = new System.Drawing.Size(67, 24);
+            this.playlistToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.playlistToolStripMenuItem.Text = "Playlist";
             // 
             // toevoegenToolStripMenuItem
             // 
             this.toevoegenToolStripMenuItem.Name = "toevoegenToolStripMenuItem";
-            this.toevoegenToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
-            this.toevoegenToolStripMenuItem.Text = "Toevoegen";
+            this.toevoegenToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.toevoegenToolStripMenuItem.Text = "Nieuwe Maken";
             this.toevoegenToolStripMenuItem.Click += new System.EventHandler(this.toevoegenToolStripMenuItem_Click);
             // 
             // importerenToolStripMenuItem
             // 
             this.importerenToolStripMenuItem.Name = "importerenToolStripMenuItem";
-            this.importerenToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
-            this.importerenToolStripMenuItem.Text = "Importeren";
+            this.importerenToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.importerenToolStripMenuItem.Text = "Openen";
             this.importerenToolStripMenuItem.Click += new System.EventHandler(this.importerenToolStripMenuItem_Click);
             // 
             // exporterenToolStripMenuItem
             // 
             this.exporterenToolStripMenuItem.Name = "exporterenToolStripMenuItem";
-            this.exporterenToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
-            this.exporterenToolStripMenuItem.Text = "Exporteren";
+            this.exporterenToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.exporterenToolStripMenuItem.Text = "Opslaan";
             this.exporterenToolStripMenuItem.Click += new System.EventHandler(this.exporterenToolStripMenuItem_Click);
             // 
             // refreshSongListToolStripMenuItem
             // 
             this.refreshSongListToolStripMenuItem.Name = "refreshSongListToolStripMenuItem";
-            this.refreshSongListToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
-            this.refreshSongListToolStripMenuItem.Text = "Refresh song list";
+            this.refreshSongListToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.refreshSongListToolStripMenuItem.Text = "Refresh Server Media";
             this.refreshSongListToolStripMenuItem.Click += new System.EventHandler(this.refreshSongListToolStripMenuItem_Click);
+            // 
+            // sendListToServerToolStripMenuItem
+            // 
+            this.sendListToServerToolStripMenuItem.Name = "sendListToServerToolStripMenuItem";
+            this.sendListToServerToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.sendListToServerToolStripMenuItem.Text = "Naar server versturen";
             // 
             // serverToolStripMenuItem
             // 
@@ -156,20 +168,20 @@
             this.verbindToolStripMenuItem,
             this.verbreekVerbindingToolStripMenuItem});
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.serverToolStripMenuItem.Text = "Server";
             // 
             // verbindToolStripMenuItem
             // 
             this.verbindToolStripMenuItem.Name = "verbindToolStripMenuItem";
-            this.verbindToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
+            this.verbindToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.verbindToolStripMenuItem.Text = "Verbind";
             this.verbindToolStripMenuItem.Click += new System.EventHandler(this.verbindToolStripMenuItem_Click);
             // 
             // verbreekVerbindingToolStripMenuItem
             // 
             this.verbreekVerbindingToolStripMenuItem.Name = "verbreekVerbindingToolStripMenuItem";
-            this.verbreekVerbindingToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
+            this.verbreekVerbindingToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.verbreekVerbindingToolStripMenuItem.Text = "Verbreek verbinding";
             this.verbreekVerbindingToolStripMenuItem.Click += new System.EventHandler(this.verbreekVerbindingToolStripMenuItem_Click);
             // 
@@ -178,9 +190,10 @@
             this.AllSongList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.SongName});
             this.AllSongList.FullRowSelect = true;
-            this.AllSongList.Location = new System.Drawing.Point(223, 50);
+            this.AllSongList.Location = new System.Drawing.Point(131, 53);
+            this.AllSongList.Margin = new System.Windows.Forms.Padding(2);
             this.AllSongList.Name = "AllSongList";
-            this.AllSongList.Size = new System.Drawing.Size(201, 208);
+            this.AllSongList.Size = new System.Drawing.Size(152, 170);
             this.AllSongList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.AllSongList.TabIndex = 1;
             this.AllSongList.UseCompatibleStateImageBehavior = false;
@@ -195,40 +208,78 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 50);
+            this.label1.Location = new System.Drawing.Point(9, 41);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 17);
+            this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Current:";
             // 
             // NameCurrentSongLabel
             // 
             this.NameCurrentSongLabel.AutoSize = true;
-            this.NameCurrentSongLabel.Location = new System.Drawing.Point(15, 85);
+            this.NameCurrentSongLabel.Location = new System.Drawing.Point(11, 69);
+            this.NameCurrentSongLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.NameCurrentSongLabel.Name = "NameCurrentSongLabel";
-            this.NameCurrentSongLabel.Size = new System.Drawing.Size(0, 17);
+            this.NameCurrentSongLabel.Size = new System.Drawing.Size(0, 13);
             this.NameCurrentSongLabel.TabIndex = 3;
             // 
             // ServerStatus
             // 
             this.ServerStatus.AutoSize = true;
-            this.ServerStatus.Location = new System.Drawing.Point(324, 266);
+            this.ServerStatus.Location = new System.Drawing.Point(205, 237);
+            this.ServerStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ServerStatus.Name = "ServerStatus";
-            this.ServerStatus.Size = new System.Drawing.Size(100, 17);
+            this.ServerStatus.Size = new System.Drawing.Size(78, 13);
             this.ServerStatus.TabIndex = 4;
             this.ServerStatus.Text = "Not connected";
             // 
+            // CurrentPlayListView
+            // 
+            this.CurrentPlayListView.AllowDrop = true;
+            this.CurrentPlayListView.Enabled = false;
+            this.CurrentPlayListView.Location = new System.Drawing.Point(288, 53);
+            this.CurrentPlayListView.Name = "CurrentPlayListView";
+            this.CurrentPlayListView.Size = new System.Drawing.Size(141, 170);
+            this.CurrentPlayListView.TabIndex = 5;
+            this.CurrentPlayListView.UseCompatibleStateImageBehavior = false;
+            this.CurrentPlayListView.View = System.Windows.Forms.View.List;
+            this.CurrentPlayListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.CurrentPlayListView_DoubleClick);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(131, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Nummers op Server";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(285, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Te maken PlayList";
+            // 
             // ClientGui
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 292);
+            this.ClientSize = new System.Drawing.Size(447, 259);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.CurrentPlayListView);
             this.Controls.Add(this.ServerStatus);
             this.Controls.Add(this.NameCurrentSongLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.AllSongList);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ClientGui";
             this.Text = "ClientGui";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientGui_FormClosing);
@@ -261,6 +312,10 @@
         private System.Windows.Forms.Label NameCurrentSongLabel;
         private System.Windows.Forms.ColumnHeader SongName;
         private System.Windows.Forms.Label ServerStatus;
+        private System.Windows.Forms.ListView CurrentPlayListView;
+        private System.Windows.Forms.ToolStripMenuItem sendListToServerToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

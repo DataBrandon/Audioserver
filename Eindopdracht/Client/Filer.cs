@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Client
@@ -14,17 +10,16 @@ namespace Client
 
         public static void ExportPlaylist(List<string> toOutput)
         {
-            FolderBrowserDialog folderchooser = new FolderBrowserDialog();
-            folderchooser.RootFolder = Environment.SpecialFolder.MyMusic;
-
-            if (folderchooser.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saver =  new SaveFileDialog();
+            saver.DefaultExt = "plist";
+            
+            if (saver.ShowDialog() == DialogResult.OK)
             {
-                string foldername = folderchooser.SelectedPath;
-                string filename = Prompt.ShowDialog("Kies de naam voor de playlist", "Filename");
+                string filename = saver.FileName;
 
                 try
                 {
-                    File.WriteAllLines(foldername + filename + ".plist", toOutput.ToArray());
+                    File.WriteAllLines(filename, toOutput.ToArray());
                 }
                 catch (IOException e)
                 {
@@ -39,6 +34,7 @@ namespace Client
         {
 
             OpenFileDialog openfile = new OpenFileDialog();
+          
 
             if (openfile.ShowDialog() == DialogResult.OK)
             {
@@ -50,9 +46,7 @@ namespace Client
                     string[] playList = File.ReadAllLines(filename);
                     foreach (string song in playList)
                     {
-                        
-                            importPlaylist.Add(song);
-                        
+                        importPlaylist.Add(song);
                     }
 
                     return importPlaylist;
@@ -68,31 +62,6 @@ namespace Client
 
             return null;
 
-        }
-    }
-
-    public static class Prompt
-    {
-        public static string ShowDialog(string text, string caption)
-        {
-            Form prompt = new Form()
-            {
-                Width = 500,
-                Height = 150,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                Text = caption,
-                StartPosition = FormStartPosition.CenterScreen
-            };
-            Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
-            TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
-            Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
-            confirmation.Click += (sender, e) => { prompt.Close(); };
-            prompt.Controls.Add(textBox);
-            prompt.Controls.Add(confirmation);
-            prompt.Controls.Add(textLabel);
-            prompt.AcceptButton = confirmation;
-
-            return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
         }
     }
 }

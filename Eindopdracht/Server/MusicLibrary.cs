@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Server.Client;
 
 namespace Server
 {
@@ -75,6 +77,22 @@ namespace Server
                 System.Diagnostics.Debug.Write(song);
             }
             System.Diagnostics.Debug.WriteLine("");
+        }
+
+        public static void ExportPlayListToDisk()
+        {
+            Filer.SavePlaylistOnDisk(playList);
+        }
+
+        public static void LoadPlayListFromDisk(string defaultPath)
+        {
+            playList = Filer.LoadPlayListFromDisk(defaultPath);
+            
+        }
+
+        public static void LoadPlayListFromDisk()
+        {
+             playList = Filer.LoadPlayListFromDisk();
         }
     }
 }

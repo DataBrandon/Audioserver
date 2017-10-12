@@ -102,7 +102,7 @@ namespace Client
                     songs.Add((string)s);
                 }
                 //TO DO Nog wijzigen naar current playlist listview
-                gui.UpdateAllSongs(songs);
+                gui.UpdateCurrentPlaylist(songs);
             }
         }
     }

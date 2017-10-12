@@ -15,10 +15,12 @@ namespace Client
         private TcpClient _client;
         private Session _session;
         private Thread _readThread;
+        private List<string> editList;
 
         public ClientGui()
         {
             InitializeComponent();
+            editList = new List<string>();
         }
 
         //Connect
@@ -174,7 +176,26 @@ namespace Client
             {
                 dynamic request = new
                 {
-                    Action = "playlist/allsongs"
+                    Action = "allsongs"
+                };
+                _session.Send(JsonConvert.SerializeObject(request));
+            }
+            else
+            {
+                MessageBox.Show("Not connected to server");
+            }
+        }
+        #endregion
+
+        //Refresh song list
+        #region
+        private void GetCurrentPlaylist(object sender, EventArgs e)
+        {
+            if (_session != null)
+            {
+                dynamic request = new
+                {
+                    Action = "playlist/current/all"
                 };
                 _session.Send(JsonConvert.SerializeObject(request));
             }
@@ -187,17 +208,25 @@ namespace Client
 
         private void toevoegenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CurrentPlayListView.Enabled = true;
+            CurrentPlayListView.Items.Clear();
             
         }
 
         private void importerenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //todo songs naar playlist listview
-            UpdateAllSongs(Filer.ImportPlaylist());
+            editList = Filer.ImportPlaylist();
+            UpdateCurrentPlaylist(editList);
+            CurrentPlayListView.Enabled = true;
         }
 
         private void exporterenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (CurrentPlayListView.Enabled == true)
+            {
+                Filer.ExportPlaylist(editList);
+            }
             
         }
 
@@ -228,6 +257,18 @@ namespace Client
             }));
         }
 
+        public void UpdateCurrentPlaylist(List<string> songs)
+        {
+            CurrentPlayListView.BeginInvoke(new MethodInvoker(() =>
+            {
+                CurrentPlayListView.Items.Clear();
+                foreach (string song in songs)
+                {
+                    CurrentPlayListView.Items.Add(song);
+                }
+            }));
+        }
+
         private void AllSongList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string selectedSong = AllSongList.SelectedItems[0].Text;
@@ -240,6 +281,38 @@ namespace Client
                 }
             };
             _session.Send(JsonConvert.SerializeObject(toSend));
+            editList.Add(selectedSong);
+            UpdateCurrentPlaylist(editList);
         }
+
+        private void CurrentPlayListView_DoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                string selectedSong = CurrentPlayListView.SelectedItems[0].Text;
+
+                editList.Remove(selectedSong);
+                UpdateCurrentPlaylist(editList);
+            }
+            else
+            {
+                string selectedSong = CurrentPlayListView.SelectedItems[0].Text;
+                dynamic toSend = new
+                {
+                    Action = "play/selectedsong",
+                    data = new
+                    {
+                        song = selectedSong
+                    }
+                };
+                _session.Send(JsonConvert.SerializeObject(toSend));
+
+            }
+
+        }
+
+        
+
+       
     }
 }

@@ -23,7 +23,17 @@ namespace Server
 
         public void Play()
         {
-            player?.Ctlcontrols.play();
+            try
+            {
+                player?.Ctlcontrols.play();
+            }
+            
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                throw;
+            }
+            
         }
 
         public void Pause()
@@ -92,8 +102,15 @@ namespace Server
             if (LibraryDialog.ShowDialog() == DialogResult.OK)
             {
                 MusicLibrary.SetMusicLibraryFolder(LibraryDialog.SelectedPath);
+                Play();
             }
             
+        }
+
+        private void loadPlayListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MusicLibrary.LoadPlayListFromDisk();
+            PlaySelectedsong(MusicLibrary.GetNextSongFromPlaylist());
         }
     }
 }
